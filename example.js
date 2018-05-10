@@ -1,3 +1,5 @@
+const CirFood = require('./index.js');
+
 (async function main() {
 	const c = new CirFood(process.env.USERNAME, process.env.PADSSOWRD);
 	const booking = await c.startBooking(new Date('2018-05-10'));

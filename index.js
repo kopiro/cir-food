@@ -227,3 +227,5 @@ class CirFood {
 
 
 }
+
+module.exports = CirFood;
