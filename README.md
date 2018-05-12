@@ -40,5 +40,5 @@ client.addCourseToCurrentBooking(course_id)
 #### Submit booking
 
 ```js
-client.submitCurrentBooking
+client.submitCurrentBooking()
 ```
