@@ -1,7 +1,7 @@
 const request = require('request-promise-native');
 const tough = require('tough-cookie');
 
-const jsdom = require("jsdom");
+const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
 async function parseXMLString(xml, callback) {
@@ -35,6 +35,7 @@ class CirFood {
 	async simpleRequest(opt) {
 		opt.jar = this.cookiejar;
 		opt.followAllRedirects = true;
+		opt.simple = true;
 		return request(opt);
 	}
 
@@ -58,13 +59,11 @@ class CirFood {
 	}
 
 	async login() {
-		if (this.loggedIn === true) return;
-
 		this.viewState = this.extractViewStateFromHtml(await this.simpleRequest({
 			uri: API_HOST + '/login.xhtml'
 		}));
 
-		this.viewState = this.extractViewStateFromHtml(await this.simpleRequest({
+		const response = await this.simpleRequest({
 			uri: API_HOST + '/login.xhtml',
 			method: 'POST',
 			formData: {
@@ -74,15 +73,20 @@ class CirFood {
 				'j_id_v_SUBMIT': '1',
 				'javax.faces.ViewState': this.viewState
 			}
-		}));
+		});
 
+		if (/login\s+failed/i.test(response)) {
+			throw new Error('LOGIN_FAILED');
+		}
+
+		this.viewState = this.extractViewStateFromHtml(response);
 		this.loggedIn = true;
 
 		return true;
 	}
 
 	async startBooking(date) {
-		await this.login();
+		if (this.loggedIn === false) await this.login();
 
 		// Format that date to be compatible with API
 		const formatted_date = [ 

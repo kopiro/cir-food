@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Flavio De Stefano",
+  "license": "MIT",
   "dependencies": {
     "jsdom": "^11.10.0",
     "request": "^2.85.0",
