@@ -9,7 +9,7 @@
   "author": "Flavio De Stefano",
   "license": "MIT",
   "dependencies": {
-    "jsdom": "^11.10.0",
+    "jsdom": "^15.2.0",
     "request": "^2.85.0",
     "request-debug": "^0.2.0",
     "request-promise-native": "^1.0.5",
